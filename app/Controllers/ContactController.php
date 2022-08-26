@@ -1,4 +1,5 @@
 <?php
+
 class ContactController
 {
    private $address, $message, $link;
@@ -37,8 +38,8 @@ class ContactController
                 echo "ERROR: Could not able to execute $sql. ".mysqli_error($this->link);
             }
 
-// Передаем наш месеж в Views
-            render ('contact/index', ['messages' => $this->messages, 'address'=>$this->address]);  
+
+            render('contact/index', ['messages' => $this->messages, 'address'=>$this->address]);
         }   
 }
 

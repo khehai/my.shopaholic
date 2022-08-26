@@ -1,18 +1,20 @@
- <div class="container">
+<div class="container">
     <div>
         <div class="row g-5">
             <div class="col-md-5 col-lg-4 order-md-last">
                 <span>Brands</span>
             </div>
+
         </div>
         <div class="col-md-7 col-lg-8">
-            <h4>Create new brand</h4>
-            <form class="needs-validation" method="POST" action="/admin/brands/store">
+            <h4>Edit brand</h4>
+            <form class="needs-validation" method="POST" action="/admin/brands/update">
+            <input type="hidden" name="id" value="<?=$brand->id?>">
             <div class="row g-3">
                 <div class="col-12">
                     <label class="form-label">Brand Name:</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="name" placeholder="Enter Brand Name">
+                        <input type="text" class="form-control" name="name" value="<?=$brand->name?>">
                         <div class="invalid-feedback">
                             Brand name is required!
                         </div>
@@ -24,7 +26,7 @@
                 <div class="col-12">
                     <label class="form-label">Brand Description:</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="description" placeholder="Enter Brand Description">
+                        <input type="text" class="form-control" name="description" value="<?=$brand->description?>">
                         <div class="invalid-feedback">
                             Brand description is required!
                         </div>
@@ -36,4 +38,5 @@
             </form>
         </div>
     </div>
-</div>
+</div> 
+  

@@ -1,12 +1,18 @@
 <?php
+namespace App\Controllers;
 
-class ShopController
+// require_once ROOT.'/core/Controller.php';
+
+use Core\Controller;
+
+class ShopController extends Controller
 {
+    protected static string $layout = 'app';
     public function index()
      {
-          render ('/shop/index');
+          $this->response->render ('/shop/index');
     }
 }
-//  require_once realpath(ROOT.'/app/Views/shop/index.php');  
+//  require_once realpath(ROOT.'/app/Views/home/index.php');  
 
     

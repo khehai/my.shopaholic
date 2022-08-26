@@ -1,16 +1,13 @@
 <?php
-require_once ROOT.'/core/Response.php';
-class HomeController
+namespace App\Controllers;
+
+// require_once ROOT.'/core/Controller.php';
+
+use Core\Controller;
+
+class HomeController extends Controller
 {
     protected static string $layout = 'app';
-    protected Response $response;
-   
-
-    public function __construct()
-     {
-        $this->response = new Response(static::$layout);
-    }
-
     public function index()
      {
           $this->response->render ('/home/index');

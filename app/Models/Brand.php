@@ -1,6 +1,13 @@
-<?php
-class Brand
+<?php 
+namespace App\Models;
+use Core\Entity;
+
+class Brand extends Entity
 {
     protected static $table = 'brands';
+
+    public $id;
+    public $name;
+    public $description;
     
 }
