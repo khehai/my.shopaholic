@@ -1,7 +1,7 @@
 <?php
-namespace App\Controllers;
+namespace Controllers;
 
-// require_once ROOT.'/core/Controller.php';
+use Models\Product;
 
 use Core\Controller;
 
@@ -9,10 +9,15 @@ class HomeController extends Controller
 {
     protected static string $layout = 'app';
     public function index()
-     {
-          $this->response->render ('/home/index');
+    {
+        $this->response->render('/home/index');
+    } 
+
+    public function getProduct()
+    {
+        // $products = (new Product())->select(["products.*", "badges.title as badgeTitle", "badges.bg"])->join('badges')->on('badge_id')->get();
+        $products = (new Product())->select(["products.*", "badges.title as
+         badgeTitle", "badges.bg", "categories.name", "categories.id as categoryId", "brands.name as brandName", "brands.id as brandId"])->mjoin(['badges'=>'badge_id', 'brands'=>'brand_id', 'categories'=>'category_id'])->get();
+        echo json_encode($products);
     }
 }
-//  require_once realpath(ROOT.'/app/Views/home/index.php');  
-
-    

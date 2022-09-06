@@ -7,6 +7,9 @@ const VIEWS = ROOT.'/app/Views';
 const CONFIG = ROOT.'/config';
 const DB_CONFIG_FILE = ROOT.'/config/db.php';
 
+const MEDIA = '/storage';
+define('STORAGE', $_SERVER['DOCUMENT_ROOT'].MEDIA);
+
 require_once __DIR__.'/autoload.php';
 
 // function conf($mix) {
@@ -15,7 +18,5 @@ require_once __DIR__.'/autoload.php';
 //     return json_decode($json, True);
 // }
 
-$routesPath = ROOT.'/config/routes.php';
-$request = new Core\Request();
-$router = new Core\Router($request, $routesPath);
-$router->run();
+
+(new Core\App())->run();

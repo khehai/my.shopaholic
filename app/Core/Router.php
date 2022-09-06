@@ -29,32 +29,21 @@ class Router
                 }
             }
             
-            // return $this->init(self::$routes['errors']);
+            // return $th  private function init(string $path, $vars=[])
+    {
+        [$controller, $action] = explode('@', $path);
+        // $controller = "\\App\Controllers\\".$controller;
+        $controller = new $controller($this->request);
+        return $controller->$action($vars);
+    }is->init(self::$routes['errors']);
         }
     }
 
     private function init(string $path, $vars=[])
     {
         [$controller, $action] = explode('@', $path);
-        $controller = "\\App\Controllers\\".$controller;
+        // $controller = "\\App\Controllers\\".$controller;
         $controller = new $controller($this->request);
         return $controller->$action($vars);
-
-        // $segments = explode('/', $path);
-        // $segment = array_pop($segments);
-        // [$controller, $action] = explode('@', $segment);
-
-        // $controllerPath = array_pop($segments);
-        // $controllerPath = $controllerPath ? '/'.$controllerPath:'';
-
-        // $controllerPath = CONTROLLERS.$controllerPath.'/'.$controller.'.php';
- 
-        // if (file_exists($controllerPath)) {
-        //     include_once $controllerPath;
-        //     $controller = new $controller($this->request);
-        // }else{
-        //     throw new Exception("File $controllerPath does not exists!");
-        // }
-        // return $controller->$action();
     }
 }

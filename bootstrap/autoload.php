@@ -1,18 +1,10 @@
 <?php
 
-function load($file) {
-    if(is_file($file)){
-        require_once $file;
-    }
+function fqcnToPath($fqcn) {
+    return str_replace('\\', '/', $fqcn).'.php';
 }
 
 spl_autoload_register(function($class) {
-    $parts = explode('\\', $class);
-
-    $classDirs = ['/core/', '/app/Models/', '/app/Controllers/', '/app/Controllers/Admin/'];
-
-    foreach ($classDirs as $classDir) {
-        load(ROOT.$classDir.end($parts).'.php');
-    }
-
+    $path = fqcnToPath($class);
+    include_once ROOT.'/app/'.$path;
 });

@@ -9,6 +9,9 @@ class Entity
     private $columns = [];
     private $as;
     private $where;
+    private $join;
+    private $on;
+    private $mjoin;
 
     public function __construct()
     {
@@ -32,6 +35,23 @@ class Entity
         $this->where = $where;
         return $this;
     }
+
+    public function join($join)
+    {
+        $this->join = $join;
+        return $this;
+    }
+    public function mjoin($mjoin)
+    {
+        $this->mjoin = $mjoin;
+        return $this;
+    }
+    public function on($on)
+    {
+        $this->on = $on;
+        return $this;
+    }
+
 
     public function next()
     {
@@ -57,6 +77,26 @@ class Entity
 
         $query .= " FROM ";
         $query .= static::$table;
+
+        if (!empty($this->mjoin)) {
+            foreach ($this->mjoin as $k => $v) {
+                $query .= " INNER JOIN ".$k;
+                $query .= " ON ".$k;
+                $query .= ".id=".static::$table;
+                $query .= ".".$v;
+            }
+            
+        }
+
+        if (!empty($this->join)) { 
+            $query .= " INNER JOIN ".$this->join;
+        }
+
+        if (!empty($this->on)) {
+            $query .= " ON ".$this->join;
+            $query .= ".id=".static::$table;
+            $query .= ".".$this->on;
+        }
 
         if(!empty($this->where)) {
             $query .= " WHERE ";

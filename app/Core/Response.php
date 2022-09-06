@@ -96,4 +96,10 @@ class Response
         header('Location: http://'.$_SERVER['HTTP_HOST'].$location);
         exit();
     }
+
+     public static function back()
+    {
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit();
+    }
 }

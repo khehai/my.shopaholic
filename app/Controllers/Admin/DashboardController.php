@@ -1,9 +1,8 @@
 <?php 
-namespace App\Controllers\Admin;
+namespace Controllers\Admin;
 
 use Core\Controller;
 
-require_once ROOT.'/core/Response.php';
 
 class DashboardController extends Controller
 {

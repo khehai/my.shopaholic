@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers;
+namespace Controllers;
 
 // require_once ROOT.'/core/Controller.php';
 

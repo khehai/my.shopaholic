@@ -1,6 +1,11 @@
 <?php
 
-class ContactController
+namespace Controllers;
+
+use Core\Controller;
+
+
+class ContactController extends Controller
 {
    private $address, $message, $link;
 
