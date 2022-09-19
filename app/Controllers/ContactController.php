@@ -8,9 +8,13 @@ use Core\Controller;
 class ContactController extends Controller
 {
    private $address, $message, $link;
+   protected static string $layout = 'app';
+   
 
     public function __construct()
         {
+            
+            parent::__construct();
             $this->address = conf('contacts');
             $this->messages = [];
 
@@ -44,7 +48,7 @@ class ContactController extends Controller
             }
 
 
-            render('contact/index', ['messages' => $this->messages, 'address'=>$this->address]);
+            $this->response->render('contact/index', ['messages' => $this->messages, 'address'=>$this->address]);
         }   
 }
 

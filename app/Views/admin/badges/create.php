@@ -23,7 +23,7 @@
             <form class="needs-validation" method="POST" action="/admin/badges/store">
             <div class="row g-3">
                 <div class="col-12">
-                    <label class="form-label">badge Name:</label>
+                    <label class="form-label">Badge Name:</label>
                     <div class="input-group">
                         <input type="text" class="form-control" name="title" placeholder="Enter badge Name">
                         <div class="invalid-feedback">

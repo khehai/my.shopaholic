@@ -1,34 +1,55 @@
 <?php
 namespace Core;
 
-class Request 
+class Request
 {
-    private array $request;
-    
-    public function __construct()
+    private array $request; // GET and POST
+
+    public function __construct() 
     {
-        $this->request = $this->prepare($_REQUEST, $_FILES);
+        $this->request = $this->prepareRequest($_REQUEST, $_FILES);
     }
-    public function __get($name)
+
+    public function __get($name) 
     {
-        if(isset($this->request[$name])) {
-            return $this->request[$name];
+        if (isset($this->request[$name])) return $this->request[$name];
+    }
+
+    private function cleanInput($data) 
+    {
+        if (is_array($data)) {
+            $cleaned = [];
+            foreach ($data as $key => $value) {
+                $cleaned[$key] = $this->cleanInput($value);
+            }
+            return $cleaned;
         }
+        return trim(htmlspecialchars($data, ENT_QUOTES));
     }
-    private function prepare(array $request, array $files) {
-        return array_merge($request, $files);
+
+    
+    private function prepareRequest(array $request, array $files)
+    {
+        $request = $this->cleanInput($request);
+        return array_merge($files, $request);
     }
-    public function uri() {
+
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+
+	public function uri():string 
+    {
         return trim($_SERVER['REQUEST_URI'], '/') ?? '';
     }
 
-     public function session()
-    {
+    public function session() {
         return Session::instance();
     }
-    
-    public function flash()
-    {
-        return Session::instance();
+    // Allows flash shorthand
+    public function flash() {
+       return Session::instance();
     }
 }

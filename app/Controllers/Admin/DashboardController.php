@@ -1,10 +1,9 @@
 <?php 
 namespace Controllers\Admin;
 
-use Core\Controller;
+use Controllers\Admin\AdminController;
 
-
-class DashboardController extends Controller
+class DashboardController extends AdminController
 {
     protected static string $layout = 'admin';
     
@@ -13,4 +12,4 @@ class DashboardController extends Controller
         $this->response->render('/admin/index');
     } 
 
-} 
+}

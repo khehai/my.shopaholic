@@ -35,9 +35,18 @@
             <li class="nav-item"><a href="/wishlist" class="nav-link"><i class="far fa-heart me-1"></i><small
                         class="text-gray fw-normal">(<span id="wish-list-value">0</span>)</small></a>
             </li>
+            <?php if(Core\Session::instance()->get('isAuth')):?>
+                <li class="nav-item"><a href="/profile" class="nav-link"><i class="fas fa-user me-1 text-gray fw-normal"></i>Profile</a>
+                </li>
+                <li class="nav-item"><a href="/logout" class="nav-link"><i class="fas fa-user me-1 text-gray fw-normal"></i>Logout</a>
+                </li>
+                <?php else: ?>
             <li class="nav-item"><a href="/login" class="nav-link"><i
                         class="fas fa-user me-1 text-gray fw-normal"></i>Login</a>
             </li>
+            <li class="nav-item"><a href="/register" class="nav-link"><i class="fas fa-user me-1 text-gray fw-normal"></i>Sign Up</a>
+            </li>
+            <?php endif?>
         </ul>
     </div>
 </nav>

@@ -19,7 +19,6 @@
             <div class="col-md-5 col-lg-4 order-md-last">
                 <span>Brands</span>
             </div>
-
         </div>
         <div class="col-md-7 col-lg-8">
             <h4>Edit brand</h4>

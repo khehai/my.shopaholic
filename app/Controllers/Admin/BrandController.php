@@ -32,8 +32,7 @@ class BrandController extends Controller
     public function store()
     {
         $this->brand->name = $this->request->name;
-        $this->brand->description = 
-        $this->request->description;
+        $this->brand->description = $this->request->description;
         try {
             $this->brand->save();
             $this->request->flash()->message('success', 'Brand created Successfully!');
@@ -41,7 +40,8 @@ class BrandController extends Controller
         } catch(\Exception $e){
             $this->request->flash()->dander($e->getMessage());
             $this->response->back();
-        }        
+        }
+        
     }
 
     public function edit($params)

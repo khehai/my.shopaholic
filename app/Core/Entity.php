@@ -119,12 +119,50 @@ class Entity
         $stmt->execute();
         return $stmt->fetch();
     }
+
+    public function firstWhere($condition, $fields=[])
+    {
+        $stmt = $this->connect->prepare($this->select($fields)->where($condition)->selectQuery());
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+    public function find($condition, $fields=[]) {
+        
+        $stmt = $this->connect->prepare($this->select($fields)->where($condition)->selectQuery());
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+
+    public function findBy($condition)
+    {
+        $stmt = $this->connect->prepare($this->where($condition)->selectQuery());
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+
     public function delete($id)
     {
         $sql = "DELETE FROM ".static::$table." WHERE id = ?";
         $stmt = $this->connect->prepare($sql);
         
         return $stmt->execute([$id]);
+    }
+
+    public function destroy($condition)
+    {
+        $sql = "DELETE FROM ".static::$table." WHERE ". $condition;
+        $stmt = $this->connect->prepare($sql);
+        
+        return $stmt->execute();
+    }
+
+    public function insert($sql, $params = [])
+    {
+        $stmt = $this->connect->prepare($sql);
+        $result = $stmt->execute($params);
+        return $result;
     }
 
     public function save()
