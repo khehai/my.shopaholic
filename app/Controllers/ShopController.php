@@ -12,5 +12,7 @@ class ShopController extends Controller
     public function index(){
         $this->response->render('shop/index');
     }
+
+    
 }
     

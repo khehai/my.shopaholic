@@ -2,7 +2,7 @@
 
 const navbarToggler = document.getElementById('navbar-toggler');
 
-const modalWindow = document.querySelector(".modal-window");
+const modalWindow = document.querySelector(".modal");
 const showCase = document.querySelector(".catalog");
 const shoppingCartValue = document.getElementById('shopping-cart-value');
 const wishListValue = document.getElementById('wish-list-value');
@@ -14,6 +14,7 @@ let wishlist = [];
 
 class Store {
     static init(key) {
+        
         if (!Store.isset(key)) Store.set(key, []);
         return Store.get(key);
     }
@@ -44,7 +45,7 @@ let productItemTemplate = product =>
         <div class="col-lg-4 col-sm-6">
             <div class="product text-center">
                 <div class="mb-3 position-relative">
-                    <div class="badge text-white bg-${product.type}">${product.title}</div>
+                    <div class="badge text-white bg-${product.badgeTitle}">${product.badgeTitle}</div>
                     <a class="d-block" href="detail.html"><img class="img-fluid w-100" src="${product.image}" alt="${product.name}"></a>
                     <div class="product-overlay">
                         <ul class="mb-0 list-inline btn-block" data-id="${product.id}" data-price="${product.price}">
@@ -54,7 +55,7 @@ let productItemTemplate = product =>
                         </ul>
                     </div>
                 </div>
-                <h6> <a class="reset-anchor" href="detail.html">${product.name}</a></h6>
+                <h6> <a class="reset-anchor" href="detail.html">${product.title}</a></h6>
                 <p class="small text-muted">$${product.price}</p>
             </div>
         </div>
@@ -249,7 +250,7 @@ let modalTemplate = product => `<div class="modal" id="productView" tabindex="-1
 
 
 function renderModal() {
-    
+
     modalWindow.querySelector('.inc-btn').addEventListener('click', event => {
         let val = event.target.previousElementSibling.value;
         
@@ -274,9 +275,9 @@ function renderModal() {
 }
 
 function toggleModal(param, product={}) {
-    if (modalWindow.innerHTML === '') {
+    if (modalWindow === null) {
         modalWindow.innerHTML = modalTemplate(product);
-        renderModal();
+      
     } else {
         modalWindow.innerHTML = '';
     }
@@ -288,13 +289,16 @@ function toggleModal(param, product={}) {
 function detailButton(products) {
     let detailButtons = showCase.querySelectorAll(".detail");
     detailButtons.forEach(button => {
-        
+
         button.addEventListener('click', event => {
             let productId = event.target.closest('.btn-block').dataset.id;
             console.log(productId);
             let product = products.find(product => product.id == productId);
             toggleModal('block', product);
-            modalWindow.querySelector('.close').addEventListener('click', event => {
+
+            modalWindow.innerHTML = modalTemplate(product);    
+            renderModal();
+            modalWindow.querySelector('.btn-close').addEventListener('click', event => {
                 event.preventDefault();
                 toggleModal('none');
             })
@@ -337,38 +341,39 @@ function addToCartButton(cart) {
 
 function distinctCategories(products) {
     let mapped = [...products.map(item => item.category)];
-
-    let distinct = Object.values(mapped.reduce((item, {id, name}) => {
-        let key = `${id}_${name}`;
-        item[key] = item[key] || {id, name, count:0};
-        item[key].count++;
-        return item;
-    }, {}));
-    return distinct;
+    const counts = {};
+    mapped.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
+    return counts;
 }
 
 
-function categoryTemplate(category) {
+function categoryTemplate(category, count) {
+
     return `
     <li class="mb-2 d-flex justify-content-between">
     <a class="reset-anchor category-item" href="#!" data-category="${category.name}" data-category-id="${category.id}">${category.name}</a>   
-    <span class="badge text-gray">${category.count}</span>
+    <span class="badge text-gray">${count}</span>
     </li>
     `;
 }
 
-function populateCategories(categories) {
+function populateCategories(categories, products) {
     //document.querySelector(".all-categories").textContent = categories.length;
     let result = "";
-    categories.forEach(item => result += categoryTemplate(item));
+    let disct = distinctCategories(products);
+    
+    categories.forEach(item => {
+        let count = disct[item.name];
+        result +=  categoryTemplate(item, count);});
     return result;
 }
 
 function renderCategory(selector, products) {
-
+    
     const categoriesAll = document.querySelector(".categories");
     if (categoriesAll) {
         categoriesAll.addEventListener('click', () => { 
+            
             showCase.innerHTML = populateProductList(products)
             addToCartButton(cart);
             detailButton(products);
@@ -496,7 +501,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             
             if (categoriesList) {
-                categoriesList.innerHTML = populateCategories(categories);
+                categoriesList.innerHTML = populateCategories(categories, products);
                 renderCategory(".categories-list", products);
             }    
         
